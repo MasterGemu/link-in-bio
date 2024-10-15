@@ -9,6 +9,7 @@
 <body>
   <div class="container">
     <div class="cover-photo">
+      <!-- Corrected image path -->
       <img src="assets/pfp.gif" class="profile" alt="Mumu Profile Picture">
     </div>
     <div class="profile-name">
@@ -36,6 +37,28 @@
     <a href="https://www.youtube.com/channel/UCSo1gKO7Wx1bMcFoTRFqLEQ">
       <button class="follow-btn">YouTube</button>
     </a>
+
+    <!-- Visitor Counter -->
+    <p>Visitors: <span id="visit-count"></span></p>
   </div>
+
+  <style>
+    #visit-count {
+      font-size: 24px;
+      font-weight: bold;
+      color: #F32C46;
+      padding: 5px;
+      background-color: #1A1A20;
+      border-radius: 10px;
+    }
+  </style>
+
+  <script>
+    fetch('https://api.countapi.xyz/hit/mastergemu-profile/visits')
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('visit-count').innerText = data.value;
+    });
+  </script>
 </body>
 </html>
