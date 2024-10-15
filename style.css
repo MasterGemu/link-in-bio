@@ -1,0 +1,92 @@
+body{
+  font-family: Montserrat, sans-serif;
+  background: #323538;
+  height: 300px;
+}
+.container{
+  user-select: none;
+  margin: 100px auto;
+  background: #2d2f32;
+  color: #b3b8cd;
+  border-radius: 5px;
+  width: 350px;
+  text-align: center;
+  box-shadow: 0 10px 20px -10px rgba(0,0,0,.75);
+  animation: float 3s ease-in-out infinite;
+}
+.cover-photo{
+  background: url(https://cdn.discordapp.com/attachments/961946555609415712/963859771235127306/4fc54eb057d463aefc6d46db33ae7f18.gif);
+  height: 160px;
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+}
+.profile{
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  margin: 93px 0 0 -175px;
+  border: 1px solid #1f1a32;
+  padding: 7px;
+  background: #232527;
+}
+.profile-name{
+  font-size: 30px;
+  font-weight: bold;
+  margin: 17px 0 0 120px;
+  color : #DFE0E3;
+}
+.about{
+  margin-top: 35px
+  line-height: 21px;
+  margin: 40px 0 10px 0;
+  color : #DFE0E3;
+}
+
+button{
+  margin: 10px 0 15px 0;
+}
+.msg-btn, .follow-btn{
+  background: #9DA1A8;
+  border: 2px solid #9DA1A8;
+  padding: 10px 45px;
+  color: #7B818E;
+  border-radius: 3px;
+  font-family: Montserrat, sans-serif;
+  cursor: pointer;
+}
+.follow-btn{
+  margin-left: 9px;
+  margin-right: 7px;
+  background: transparent;
+  color: #9DA1A8;
+}
+.follow-btn:hover{
+  color: #000000;
+  background: #9DA1A8;
+  transition: .5s;
+}
+.container i{
+  padding-left: 20px;
+  font-size: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: .5s;
+}
+.container i:hover{
+  color: #03bfbc;
+}
+
+@keyframes float {
+	0% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatey(0px);
+	}
+	50% {
+		box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
+		transform: translatey(-20px);
+	}
+	100% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatey(0px);
+	}
+}
