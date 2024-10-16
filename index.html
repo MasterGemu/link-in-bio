@@ -1,108 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gemu's Profile</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container">
-    <div class="cover-photo">
-      <img src="assets/pfp.gif" class="profile" alt="Mumu Profile Picture">
-    </div>
-    <div class="profile-name">
-      <b>Gemu</b>
-    </div>
-    <p class="about">
-      <b>Discord Profile</b>
-    </p>
-    <p>
-      <b><u>mastergemu</u></b>
-    </p>
+<script src="token.js"></script>
+<script>
+  const username = 'MasterGemu';
+  const repo = 'link-in-bio';
+  const filePath = 'visit_count.json';
 
-    <a href="https://www.facebook.com/profile.php?id=100033912199337">
-      <button class="follow-btn">Facebook</button>
-    </a>
+  async function fetchCount() {
+    const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${filePath}`, {
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3.raw'
+      }
+    });
+    const data = await response.json();
+    return JSON.parse(atob(data.content)).count;
+  }
 
-    <a href="https://www.tiktok.com/@mumu_n99">
-      <button class="follow-btn">TikTok</button>
-    </a>
+  async function updateCount(newCount) {
+    const getFile = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${filePath}`, {
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3.raw'
+      }
+    });
+    const fileData = await getFile.json();
+    const sha = fileData.sha;  // Required for updates
 
-    <a href="https://discord.gg/8vPDbchJf2">
-      <button class="follow-btn">Discord</button>
-    </a>
+    const updatedContent = {
+      message: "Update visit count",
+      content: btoa(JSON.stringify({ count: newCount })),
+      sha: sha
+    };
 
-    <a href="https://www.youtube.com/channel/UCSo1gKO7Wx1bMcFoTRFqLEQ">
-      <button class="follow-btn">YouTube</button>
-    </a>
+    await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${filePath}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedContent)
+    });
+  }
 
-    <!-- Visitor Counter -->
-    <p>Visitors: <span id="visit-count"></span></p>
-  </div>
+  async function handleVisit() {
+    const currentCount = await fetchCount();
+    const newCount = currentCount + 1;
+    document.getElementById('visit-count').innerText = newCount;
+    updateCount(newCount);
+  }
 
-  <style>
-    #visit-count {
-      font-size: 24px;
-      font-weight: bold;
-      color: #F32C46;
-      padding: 5px;
-      background-color: #1A1A20;
-      border-radius: 10px;
-    }
-  </style>
-
-  <script>
-    const username = 'MasterGemu';
-    const repo = 'link-in-bio';
-    const filePath = 'visit_count.json';
-    const token = window.GITHUB_TOKEN;  // On suppose que le token est défini globalement
-
-    async function fetchCount() {
-      const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${filePath}`, {
-        headers: {
-          'Authorization': `token ${token}`,
-          'Accept': 'application/vnd.github.v3.raw'
-        }
-      });
-      const data = await response.json();
-      return JSON.parse(atob(data.content)).count;
-    }
-
-    async function updateCount(newCount) {
-      const getFile = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${filePath}`, {
-        headers: {
-          'Authorization': `token ${token}`,
-          'Accept': 'application/vnd.github.v3.raw'
-        }
-      });
-      const fileData = await getFile.json();
-      const sha = fileData.sha;
-
-      const updatedContent = {
-        message: "Update visit count",
-        content: btoa(JSON.stringify({ count: newCount })),
-        sha: sha
-      };
-
-      await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${filePath}`, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `token ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedContent)
-      });
-    }
-
-    async function handleVisit() {
-      const currentCount = await fetchCount();
-      const newCount = currentCount + 1;
-      document.getElementById('visit-count').innerText = newCount;
-      updateCount(newCount);
-    }
-
-    handleVisit();
-  </script>
-</body>
-</html>
+  handleVisit();
+</script>
