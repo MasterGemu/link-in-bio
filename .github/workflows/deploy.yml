@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -6,14 +6,13 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Met à jour ici
 
-      - name: Deploy to GitHub Pages
+      - name: Build and Deploy
         run: |
           sed -i "s/YOUR_GITHUB_TOKEN/${{ secrets.MY_SECRET_TOKEN }}/g" index.html
           # Ajoute d'autres commandes de déploiement ici
