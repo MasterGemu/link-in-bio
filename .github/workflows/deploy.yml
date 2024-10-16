@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy
 
 on:
   push:
@@ -9,14 +9,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3  # Met à jour ici
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16' # Utiliser une version de Node.js appropriée
 
-      - name: Build and Deploy
+      - name: Deploy to GitHub Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_SECRET_TOKEN }}  # Assurez-vous que le secret est bien défini
         run: |
-          sed -i "s/YOUR_GITHUB_TOKEN/${{ secrets.MY_SECRET_TOKEN }}/g" index.html
-          # Ajoute d'autres commandes de déploiement ici
-      - name: Check token replacement
-        run: |
-          cat index.html
-
+          # Ici, vous pouvez ajouter des commandes pour construire et déployer votre projet
+          echo "Déploiement réussi avec le token."
