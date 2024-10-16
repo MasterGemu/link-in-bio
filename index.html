@@ -66,8 +66,9 @@
         }
       });
       const data = await response.json();
-      return JSON.parse(atob(data.content)).count;
+      return data.count;
     }
+
 
     async function updateCount(newCount) {
       const getFile = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${filePath}`, {
