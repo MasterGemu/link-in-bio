@@ -1,4 +1,4 @@
-name: Deploy with Secret
+name: Deploy GitHub Pages
 
 on:
   push:
@@ -6,26 +6,19 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'
+      - name: Inject secret token into index.html
+        run: |
+          sed -i 's/YOUR_GITHUB_TOKEN/${{ secrets.MY_SECRET_TOKEN }}/' index.html
 
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build site
-      run: npm run build
-
-    - name: Deploy to GitHub Pages
-      run: |
-        echo "Deploying the website..."
-        # Remplace YOUR_GITHUB_TOKEN par ton secret
-        echo ${{ secrets.MY_SECRET_TOKEN }}
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./  # Your output directory
