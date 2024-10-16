@@ -17,3 +17,7 @@ jobs:
         run: |
           sed -i "s/YOUR_GITHUB_TOKEN/${{ secrets.MY_SECRET_TOKEN }}/g" index.html
           # Ajoute d'autres commandes de déploiement ici
+      - name: Check token replacement
+        run: |
+          cat index.html
+
