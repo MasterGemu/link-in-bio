@@ -56,7 +56,7 @@
     const username = 'MasterGemu';
     const repo = 'link-in-bio';
     const filePath = 'visit_count.json';
-    const token = process.env.MY_SECRET_TOKEN;  // Utilisation de la variable d'environnement
+    const token = 'YOUR_GITHUB_TOKEN';  // Cette ligne sera remplacée par GitHub Actions
 
     async function fetchCount() {
       const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${filePath}`, {
@@ -77,7 +77,7 @@
         }
       });
       const fileData = await getFile.json();
-      const sha = fileData.sha;  // Required for updates
+      const sha = fileData.sha;  // Nécessaire pour les mises à jour
 
       const updatedContent = {
         message: "Update visit count",
