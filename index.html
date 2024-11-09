@@ -38,7 +38,9 @@
     </a>
 
     <!-- Visitor Counter -->
-    <p>Visitors: <span id="visit-count"></span></p>
+    <a href='https://www.free-counters.org/'>https://www.Free-Counters.org</a> 
+    <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=245f3472071c65d8457ca08ef427d173a80f7d50'></script>
+    <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1259947/t/3"></script>
   </div>
 
   <style>
@@ -51,59 +53,5 @@
       border-radius: 10px;
     }
   </style>
-
-  <script>
-    const username = 'MasterGemu';
-    const repo = 'link-in-bio';
-    const filePath = 'visit_count.json';
-    const token = 'Z2hwX0lSODExRjVjSjE3WnV1dTdzSng1ZGRJNTZqU1R2ZjRVNXMyeA==';
-
-    async function fetchCount() {
-      const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${filePath}`, {
-        headers: {
-          'Authorization': `token ${atob(token)}`,
-          'Accept': 'application/vnd.github.v3.raw'
-        }
-      });
-      const data = await response.json();
-      return data.count;
-    }
-
-
-    async function updateCount(newCount) {
-      const getFile = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${filePath}`, {
-        headers: {
-          'Authorization': `token ${atob(token)}`,
-          'Accept': 'application/vnd.github.v3.raw'
-        }
-      });
-      const fileData = await getFile.json();
-      const sha = fileData.sha;  // Required for updates
-
-      const updatedContent = {
-        message: "Update visit count",
-        content: btoa(JSON.stringify({ count: newCount })),
-        sha: sha
-      };
-
-      await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${filePath}`, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `token ${atob(token)}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedContent)
-      });
-    }
-
-    async function handleVisit() {
-      const currentCount = await fetchCount();
-      const newCount = currentCount + 1;
-      document.getElementById('visit-count').innerText = newCount;
-      updateCount(newCount);
-    }
-
-    handleVisit();
-  </script>
 </body>
 </html>
